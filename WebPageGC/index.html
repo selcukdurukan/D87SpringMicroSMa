@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--Responsive tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Ana Sayfa</title>
+    <meta name="Giriş sayfası" content="Türkiye'nin alışveriş sitesi." />
+
+    <!--Bootstrap CSS-->
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!--Bootstrap JS-->
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body onload="getAllData()">
+    <div class="container mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Username</td>
+            <td>Email</td>
+            <td>Photo</td>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody id="mytable">
+          <tr>
+            <!-- <td>1</td>
+            <td>Muhammet</td>
+            <td>muhammet@gmail.com</td>
+            <td>
+              <img
+                src="https://randomuser.me/api/portraits/thumb/women/58.jpg"
+                alt="user photo"
+              />
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary">Edit</button>
+              <button type="button" class="btn btn-secondary">Delete</button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <div class="row text-center" id="loading">
+        <iframe src="https://embed.lottiefiles.com/animation/99297"></iframe>
+      </div>
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination" id="pagelist"></ul>
+        </nav>
+      </div>
+    </div>
+
+    <script>
+      let currentPage = 0;
+      const pageSize = 3;
+      function setCurrentPage(page) {
+        currentPage = page;
+        getAllData();
+      }
+
+      function setPreviousPage() {
+        if (currentPage > 0) {
+          currentPage = currentPage - 1;
+          getAllData();
+        }
+      }
+
+      function setNextPage() {
+        currentPage = currentPage + 1;
+        getAllData();
+      }
+
+      function getAllData() {
+        document.getElementById("mytable").innerHTML = "";
+        document.getElementById("loading").style.display = "block";
+        /**
+         * Network ApiGateway kullanılarrak, gc üzerinden bağlanıldı.
+         * */
+        fetch("http://34.89.218.76/userprofile/getall", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            token: localStorage.getItem("token"),
+            currentPage: currentPage,
+            pageSize: pageSize,
+            sortParameter: "username",
+            direction: "DESC",
+          }),
+        })
+          .then((Response) => Response.json())
+          .then((data) => {
+            console.log(data);
+            document.getElementById("pagelist").innerHTML = `
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="setPreviousPage(0)"
+                >Previous</a
+              >
+            </li>`;
+            for (let i = 1; i <= data.totalPages; i++) {
+              document.getElementById("pagelist").innerHTML += `
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="setCurrentPage(${
+                i - 1
+              })">${i}</a>
+            </li>
+                `;
+            }
+            document.getElementById("pagelist").innerHTML += `
+            <li class="page-item">
+              <a class="page-link" href="#" onclick="setNextPage()">Next</a>
+            </li>
+              `;
+
+            if (data?.message === undefined) {
+              //data.totalPages.map((item, index) => {});
+
+              data.content.map((item, index) => {
+                console.log(item);
+
+                document.getElementById("mytable").innerHTML += `
+                    <td>${item.id}</td>
+                    <td>${item.username}</td>
+                    <td>${item.email}</td>
+                    <td>
+                      <img
+                        src="https://randomuser.me/api/portraits/med/women/${
+                          index + currentPage * pageSize + 1
+                        }.jpg"
+                        alt="user photo"
+                      />
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary">Edit</button>
+                      <button type="button" class="btn btn-secondary">Delete</button>
+                    </td>
+                        `;
+              });
+              document.getElementById("loading").style.display = "none";
+            } else {
+              alert(data.message);
+              window.location.href = "login.html";
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

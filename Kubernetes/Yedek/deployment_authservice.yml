@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-authservice
+  labels:
+    name: dep-authservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-authservice 
+  template:
+    metadata:
+      name: configserver
+      labels:
+        app: pod-authservice 
+    spec:
+      containers:
+      - name: authservice
+        image: selcukdurukan/msmad87auth:v001
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "150m"
+        ports:
+        - containerPort: 9090

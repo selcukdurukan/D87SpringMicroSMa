@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--Responsive tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login |</title>
+    <meta name="Giriş sayfası" content="Türkiye'nin alışveriş sitesi." />
+
+    <!--Bootstrap CSS-->
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!--Bootstrap JS-->
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label>Username</label>
+            <input
+              id="txtusername"
+              type="text"
+              class="form-control"
+              placeholder="kullanıcı adı giriniz"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Password</label>
+            <input
+              id="txtpassword"
+              type="password"
+              class="form-control"
+              placeholder="şifre giriniz"
+            />
+          </div>
+          <div class="d-grid gap-1">
+            <button type="submit" onclick="login()" class="btn btn-success">
+              Giriş Yap
+            </button>
+          </div>
+
+          <div class="d-grid gap-1 mt-1">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="register()"
+            >
+              Kayıt ol
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <script>
+      function register() {
+        window.location.href = "register.html";
+      }
+
+      function login() {
+        //alert("Giriş yapıldı");
+        var Username = document.getElementById("txtusername").value;
+        var Password = document.getElementById("txtpassword").value;
+        /**
+         * Network ApiGateway kullanılarrak, gc üzerinden bağlanıldı.
+         * */
+        fetch("http://34.89.218.76/auth/dologin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: Username,
+            password: Password,
+          }),
+        })
+          .then((Response) => Response.json())
+          .then((data) => {
+            if (data?.token === undefined) {
+              alert(data.message);
+              console.log("data: ", data);
+              console.log("token: ", data.token);
+            } else {
+              localStorage.setItem("token", data.token);
+              window.location.href = "index.html";
+            }
+          })
+          .catch((err) => {
+            console.log("Hata oldu.... ", err);
+          });
+      }
+    </script>
+  </body>
+</html>

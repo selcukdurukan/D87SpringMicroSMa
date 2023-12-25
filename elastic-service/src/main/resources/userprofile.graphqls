@@ -1,0 +1,28 @@
+# graphqls dosyası içinde tanımlanan datatype larda ! işareti zorunlu tanımlı alanları belirtir (null olamaz).
+# ! işareti olmayan alanlar null olabilir.
+type UserProfile{
+    id: ID
+    userProfileId: String
+    authId: Int
+    username: String
+    profileImage: String
+}
+
+input UserProfileInput{
+    authId: Int!
+    username: String!
+    profileImage: String!
+}
+
+#Query'de ki [UserProfile] yukarda belirlediğimiz typedır. Class ile ilgisi yok.
+type Query{
+    findAll: [UserProfile]
+    findByUsername(username: String!): UserProfile
+}
+
+type Mutation{
+    createUserProfile(userinput: UserProfileInput!): Boolean
+}
+
+
+

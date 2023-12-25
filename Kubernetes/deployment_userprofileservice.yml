@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-userprofileservice
+  labels:
+    name: dep-userprofileservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-userprofileservice 
+  template:
+    metadata:
+      name: userprofileservice
+      labels:
+        app: pod-userprofileservice 
+    spec:
+      containers:
+      - name: userprofileservice
+        image: selcukdurukan/msmad87user:v002
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 9093

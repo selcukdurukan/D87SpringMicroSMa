@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-configserver
+  labels:
+    name: dep-configserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-configserver
+  template:
+    metadata:
+      name: configserver
+      labels:
+        app: pod-configserver
+    spec:
+      containers:
+      - name: configserver
+        image: selcukdurukan/msmad87configgit:v001
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 8888
+        env:
+          - name: GIT_KEY
+            value: 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

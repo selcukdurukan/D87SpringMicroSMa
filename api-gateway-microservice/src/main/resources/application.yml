@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      uri: http://10.0.13.148:8888
+  config:
+    import: "configserver:"
+  application:
+    name: api-gateway-application
+
+#YML YAZILMAZ UNUTMA!

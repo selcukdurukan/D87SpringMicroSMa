@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-configserver
+  labels:
+    name: dep-configserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-configserver
+  template:
+    metadata:
+      name: configserver
+      labels:
+        app: pod-configserver
+    spec:
+      containers:
+      - name: configserver
+        image: selcukdurukan/configserver
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 8888

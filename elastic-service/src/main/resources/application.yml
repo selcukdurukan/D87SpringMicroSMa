@@ -1,0 +1,45 @@
+server:
+  port: 9100
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: elastic-service
+  elasticsearch:
+    uris: http://localhost:9200
+
+#Aşağıdaki loglama root altında, yani com.ba.boost altında, herşeyi loglar ve gösterir. default ayar infodur.
+#Log Level: ERROR, WARN, INFO, DEBUG, or TRACE.
+#logging:
+#  level:
+#    root: trace
+
+
+#org.springframework.*'la ilgili herşeyi DEBUG modda logla demektir
+#logging:
+#  level:
+#    org.springframework: DEBUG
+
+#org.springframework.*'la ilgili herşeyi DEBUG modda logla demektir
+#com.ba.boost.graphql altında herşeyi trace modda logla demektir.
+#logging:
+#  level:
+#    org.springframework: debug
+#    com.ba.boost.graphql: trace
+
+
+#org.springframework.*'la ilgili herşeyi DEBUG modda logla demektir
+#com.ba.boost.graphql altında herşeyi trace modda logla demektir.
+#root altında yukarda 2'si hariç herşey trace modda logla demektir.
+#1 mb 'a kadar logla logladıktan sonra diğer dosyayı yarat ona geç demektir.
+logging:
+  level:
+    org.springframework: debug
+    com.ba.boost.graphql: info
+    root: trace
+  logback:
+    rollingpolicy:
+      max-file-size: 1MB
+

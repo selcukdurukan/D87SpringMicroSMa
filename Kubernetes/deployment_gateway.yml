@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-apigateway
+  labels:
+    name: dep-apigateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-apigateway 
+  template:
+    metadata:
+      name: apigateway
+      labels:
+        app: pod-apigateway 
+    spec:
+      containers:
+      - name: apigateway
+        image: selcukdurukan/msmad87gateway:v001
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 80

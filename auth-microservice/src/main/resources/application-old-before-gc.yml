@@ -1,0 +1,10 @@
+spring:
+  cloud:
+    config:
+      uri: http://192.168.1.153:8888
+  config:
+    import: "configserver:"
+  application:
+    name: auth-service-application
+
+#YML YAZILMAZ UNUTMA!

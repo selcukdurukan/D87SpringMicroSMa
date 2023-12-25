@@ -1,0 +1,32 @@
+- gcloud container clusters get-credentials d87springmicrosma --zone europe-west3-c --project d87springmicrosma
+- kubectl get services
+- kubectl get pods
+- kubectl get pods -o wide
+- kubectl get deployments
+- kubectl get pods -w
+- kubectl get nodes
+- kubectl apply -f service_clusterip_zipkin.yml
+- kubectl apply -f deployment_configserver.yml
+- kubectl apply -f deployment_elastic.yml
+- kubectl apply -f deployment_redis.yml
+- kubectl apply -f deployment_zipkin.yml
+- kubectl apply -f service_loadbalancer_mongodb.yml
+- kubectl apply -f deployment_mongodb.yml
+- kubectl apply -f pod_postgre.yml
+- kubectl logs -f deployment-configserver-6bf774ccfb-k6h8b
+- kubectl logs -f deployment_configserver-78554d76dc-lqdsd
+- kubectl describe services service-authservice
+- kubectl describe pods 
+- kubectl describe pods deployment-configserver-6bf774ccfb-k6h8b
+- kubectl run gc-postgresql --env="POSTGRES_PASSWORD=root" --image=postgres
+- kubectl delete pods postgresql
+- kubectl delete pods gc-postgresql
+- kubectl delete pods deployment-mongodb-74c4d548c4-x9xzr
+- kubectl delete pods zipkin-677b75fdd7-qhb99 
+- kubectl delete deployment deployment-configserver
+- kubectl delete deployment deployment-mongodb
+- kubectl delete services service-mongodb
+
+
+
+

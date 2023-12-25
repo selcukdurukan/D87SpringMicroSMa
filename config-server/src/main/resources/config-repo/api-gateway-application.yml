@@ -1,0 +1,71 @@
+
+#ApiGateway dışarıya açılan yüzümüz olduğu için ve internet sitelerinin çağrıldığı yegane port 80 oldugundan dolayı
+#port her zaman 80 olmalı.
+
+#Spring-ZİPKİN sonradan, zipkini uygulamay koymak için yazıldı.
+
+server:
+  port: 80
+
+spring:
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: api-gateway
+  application:
+    name: api-gateway-microservice
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+      default-filters:
+        - RewritePath= /(?<segment>.*) , /v1/dev/$\{segment}
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      routes:
+       -  id: auth-microservice
+          uri: http://localhost:9090
+          predicates:
+          - Path=/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: auth
+                fallbackUri: forward:/fallbackauth
+       - id: product-microservice
+         uri: http://localhost:9091
+         predicates:
+           - Path=/product/**
+         filters:
+           - name: CircuitBreaker
+             args:
+               name: product
+               fallbackUri: forward:/fallbackproduct
+       - id: sales-microservice
+         uri: http://localhost:9092
+         predicates:
+           - Path=/sales/**
+         filters:
+           - name: CircuitBreaker
+             args:
+               name: sales
+               fallbackUri: forward:/fallbacksales
+       - id: userprofile-microservice
+         uri: http://localhost:9093
+         predicates:
+           - Path=/userprofile/**
+         filters:
+           - name: CircuitBreaker
+             args:
+               name: userprofile
+               fallbackUri: forward:/fallbackuser
+

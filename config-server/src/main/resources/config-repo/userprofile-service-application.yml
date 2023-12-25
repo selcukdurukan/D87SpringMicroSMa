@@ -1,0 +1,29 @@
+#Spring-ZİPKİN sonradan, zipkini uygulamay koymak için yazıldı.
+
+server:
+  port: 9093
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: java4
+    password: root
+  zipkin:
+    enabled: true
+    base-url: http://localhost:9411
+    service:
+      name: userprofile-service
+  data:
+    mongodb:
+      host: 35.234.91.207
+      port: 27777
+      database: springMsMaD87
+      username: JavaUser
+      password: Aa123456
+
+
+#Elastic service'e dataları geçirirken openfeign kullanmak zorundayız bu yuzden bunu ekliyoruz. (manager class'ı)
+myapplication:
+  feign-client:
+    elasticsearch: http://localhost:9100/userprofile

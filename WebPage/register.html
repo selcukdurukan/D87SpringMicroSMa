@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!--Responsive tags-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Register |</title>
+    <meta name="Giriş sayfası" content="Türkiye'nin alışveriş sitesi." />
+
+    <!--Bootstrap CSS-->
+    <link href="bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!--Bootstrap JS-->
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label>Username</label>
+            <input
+              required
+              id="txtusername"
+              type="text"
+              class="form-control"
+              placeholder="kullanıcı adı giriniz"
+            />
+          </div>
+          <div class="mb-3">
+            <label>Password</label>
+            <input
+              required
+              id="txtpassword"
+              type="password"
+              class="form-control"
+              placeholder="şifre giriniz"
+            />
+            <div class="mb-3">
+              <label>Repassword</label>
+              <input
+                required
+                id="txtrepassword"
+                type="password"
+                class="form-control"
+                placeholder="şifrenizi doğrulayın"
+              />
+            </div>
+            <div class="mb-3">
+              <label>Email</label>
+              <input
+                required
+                id="txtemail"
+                type="email"
+                class="form-control"
+                placeholder="email giriniz"
+              />
+            </div>
+          </div>
+          <div class="d-grid gap-1">
+            <button type="submit" onclick="register()" class="btn btn-success">
+              Kayıt ol
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    </div>
+
+    <script>
+      function register() {
+        //alert("Giriş yapıldı");
+        var Username = document.getElementById("txtusername").value;
+        var Password = document.getElementById("txtpassword").value;
+        var Repassword = document.getElementById("txtrepassword").value;
+        var email = document.getElementById("txtemail").value;
+
+        if (
+          Username === "" ||
+          Password === "" ||
+          Repassword === "" ||
+          email === ""
+        ) {
+          alert("Lütfen gerekli alanları doldurunuz.");
+          return;
+        } else {
+          fetch("http://localhost:9090/v1/dev/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: Username,
+              password: Password,
+              rePassword: Repassword,
+              email: email,
+            }),
+          })
+            .then((Response) => Response.json())
+            .then((data) => {
+              console.log("data: ", data);
+              if (data?.registerState === undefined) {
+                alert(data.message);
+                return;
+              }
+              if (data?.registerState === 100) {
+                window.location.href = "login.html";
+              }
+            })
+            .catch((err) => {
+              console.log("Hata oldu.... ", err);
+            });
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+/**
+ * Burada json object - document mantığıyla bazı parameterleri tanımlayıp * dışarı export ediyoruz.
+ */
+ext {
+
+    /**
+     *Bu parametreler libs içinde bağımlılılların versiyonlarını tanımlar.
+     */
+    versions = [
+            springBoot                  : "2.7.7",
+            lombok                      : "1.18.24",
+            postgreSQL                  : "42.5.1",
+            swaggerUI                   : "1.7.0",
+            mapstruct                   : "1.5.3.Final",
+            springCloud                 : "3.1.5",
+            springCloudGateway          : "3.1.4",
+            springCloudCircuitBreaker   : "2.1.4",
+            springBootDataMongo         : "3.0.3",
+            springCloudSleuthZipkin     : "3.1.5",
+            springBootDataElasticsearch : "2.7.11",
+            graphiqlSpringStarter       : "11.1.0",
+            graphqlSpringStarter        : "13.0.0",
+            graphqlJavaTools            : "13.0.0",
+            auth0JWT                    : "4.2.2",
+    ]
+
+    /**
+     * Bağımlılık listesinde tanımlama yaparken sıralama şu şekilde olmalıdır.
+     * 1. Bağımlılığın Adı
+     * 2. : (iki nokta)
+     * 3. Group Id (com.muhammet - projenin group idsi)
+     * 4. : (iki nokta)
+     * 5. Artifact Id (test - projenin artifact idsi yani proje adı)
+     * 6. : (iki nokta)
+     * 7. Versiyon (v.0.0.1 - projenin versiyonu) bu version yukarıda versions tan alınacaktır.
+     */
+    libs = [
+            springBootDataJpa               : "org.springframework.boot:spring-boot-starter-data-jpa:${versions.springBoot}",
+            springBootWeb                   : "org.springframework.boot:spring-boot-starter-web:${versions.springBoot}",
+            springBootDevTools              : "org.springframework.boot:spring-boot-devtools:${versions.springBoot}",
+            springBootValidation            : "org.springframework.boot:spring-boot-starter-validation:${versions.springBoot}",
+            lombok                          : "org.projectlombok:lombok:${versions.lombok}",
+            postgreSQL                      : "org.postgresql:postgresql:${versions.postgreSQL}",
+            swaggerUI                       : "org.springdoc:springdoc-openapi-ui:${versions.swaggerUI}",
+            mapstruct                       : "org.mapstruct:mapstruct:${versions.mapstruct}",
+            mapstructProcessor              : "org.mapstruct:mapstruct-processor:${versions.mapstruct}",
+            springCloudOpenFeign            : "org.springframework.cloud:spring-cloud-starter-openfeign:${versions.springCloud}",
+            /**
+             * Spring cloud config için gerekli bağımlılıklar. Server - Client için
+             */
+            springCloudConfig               : "org.springframework.cloud:spring-cloud-starter-config:${versions.springCloud}",
+            springCloudConfigServer         : "org.springframework.cloud:spring-cloud-config-server:${versions.springCloud}",
+            springCloudConfigClient         : "org.springframework.cloud:spring-cloud-config-client:${versions.springCloud}",
+            /**
+             * Spring Cloud Gateway için gerekli bağımlılıklar.
+             */
+            springCloudGateway              : "org.springframework.cloud:spring-cloud-starter-gateway:${versions.springCloudGateway}",
+            /**
+             * Gateway için devre kesici, bir sunucu yanıt vermediğinde otomatik o request gatewayden dönmesini sağlar.
+             * api-gateway-ms. application.yml dosyasındaki filters ile filtreleme sağlar.
+             */
+            springCloudCircuitBreakerReactor: "org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j:${versions.springCloudCircuitBreaker}",
+            springCloudCircuitBreaker       : "org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:${versions.springCloudCircuitBreaker}",
+            /**
+             * MongoDb'yi userprofile, sales, product için kullanacağız
+             */
+            springBootDataMongo             : "org.springframework.boot:spring-boot-starter-data-mongodb:${versions.springBootDataMongo}",
+            /**
+             * Zipkin server için bağımlılık
+             * base-url: http://localhost:9411
+             */
+            springCloudSleuthZipkin         : "org.springframework.cloud:spring-cloud-sleuth-zipkin:${versions.springCloudSleuthZipkin}",
+            springCloudStarterSleuth        : "org.springframework.cloud:spring-cloud-starter-sleuth:${versions.springCloudSleuthZipkin}",
+            /**
+             * redis ekledik, sadece userprofile'a eklendi.
+             */
+            springBootDataRedis             : "org.springframework.boot:spring-boot-starter-data-redis:${versions.springBoot}",
+            /**
+             * Elasticsearch eklendi, eklerken version kontrol yapmayı unutma.
+             */
+            springBootDataElasticsearch     : "org.springframework.boot:spring-boot-starter-data-elasticsearch:${versions.springBootDataElasticsearch}",
+            /**
+             * GraphQL, sadece elastic-service'e eklendi.
+             * http://localhost:9100/graphiql
+             */
+            graphiqlSpringStarter           : "com.graphql-java-kickstart:graphiql-spring-boot-starter:${versions.graphiqlSpringStarter}",
+            graphqlSpringStarter            : "com.graphql-java-kickstart:graphql-spring-boot-starter:${versions.graphqlSpringStarter}",
+            graphqlJavaTools                : "com.graphql-java-kickstart:graphql-java-tools:${versions.graphqlJavaTools}",
+            /**
+             * Jwt dependencies
+             * https://mvnrepository.com/artifact/com.auth0/java-jwt
+             */
+            auth0JWT                        : "com.auth0:java-jwt:${versions.auth0JWT}",
+            /**
+             * Spring Amqp to use RabbitMq
+             */
+            springBootStarterAmqp           : "org.springframework.boot:spring-boot-starter-amqp:${versions.springBoot}",
+            /**
+             * Spring security - auth için eklendi.
+             */
+            springBootStarterSecurity       : "org.springframework.boot:spring-boot-starter-security:${versions.springBoot}",
+    ]
+}

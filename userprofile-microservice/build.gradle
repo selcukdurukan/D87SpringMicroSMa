@@ -1,0 +1,18 @@
+buildscript {
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${versions.springBoot}")
+    }
+}
+
+dependencies {
+
+    /**
+     * Userprofile Postgreden(SQL) ---> MongoDB(NoSQL)'e çevrildi.
+     */
+//    implementation libs.springBootDataJpa
+//    implementation libs.postgreSQL
+    implementation libs.springBootDataMongo
+    implementation libs.springCloudConfigClient
+    implementation libs.springBootDataRedis
+    implementation libs.springBootStarterAmqp
+}
