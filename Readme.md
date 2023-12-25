@@ -1,5 +1,6 @@
 # GENEL İÇERİK VE NOTLAR
 
+![img.png](img.png)
 ## Docker file oluşturulması gerekli.
 
 ## Docker Kullanımları.
